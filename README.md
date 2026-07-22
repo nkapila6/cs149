@@ -62,3 +62,17 @@ Finish any remaining lectures (17-18) while wrapping up open programming assignm
 | 18 | Accessing Memory + Course Wrap Up | How DRAM works, post-CS149 topic suggestions | [Watch](https://www.youtube.com/watch?v=J7v_ubArrno&list=PLoROMvodv4rMp7MTFr4hQsDEcX7Bx6Odp) |
 
 The playlist also has a Midterm Review video (playlist video 14) between lecture 13 and 14, not listed above.
+
+## Apple Silicon / Local Setup
+
+Can you run the assignments on an Apple Silicon Mac (M-series)? Summary:
+
+| Asst | Apple Silicon? | What you need |
+| --- | --- | --- |
+| 1 | Yes | macOS ISPC binary, Makefile tweaks (see `assignments/asst1/README_aarch64.md`). Missing: kmeans `data.dat` is on Stanford AFS, not public. |
+| 2 | Yes | Nothing special, pure C++ with std::thread. Fully portable. |
+| 3 | No | CUDA required. No Apple Silicon path. Use a cloud GPU box (Google Colab free T4, AWS g4dn, etc). |
+| 4 | Maybe | ISPC Makefile tweaks like asst1, plus recompile `module_ref.so` from source (the shipped .so is x86 only). |
+| 5 | Yes | `brew install libomp` and add libomp include/lib flags to the Makefile. Graph dataset is publicly downloadable (3GB). |
+
+asst1 has a full ARM handout at `assignments/asst1/README_aarch64.md`. For asst1 programs 3 and 4, change `avx2-i32x8` to `neon-i32x8` and `x86-64` to `aarch64` in the Makefiles. ISPC emits 8-wide NEON instead of 8-wide AVX2 (same width, different ISA).
